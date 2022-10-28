@@ -2,12 +2,10 @@ package com.springboot.api.controller;
 
 import com.springboot.api.dao.Userdao;
 import com.springboot.api.domain.User;
+import com.springboot.api.domain.dto.UserRequestDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -20,9 +18,14 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public User add(User user) throws Exception {
-        userdao.add(new User("1", "kos", "1234"));
-        return userdao.findById("1");
+    public User add(UserRequestDto user) throws Exception {
+        userdao.add(new User("2", "kos", "1234"));
+        return userdao.findById("2");
+    }
+
+    @PostMapping("/user")
+    public User postUser(@RequestBody User user) {
+        return user;
     }
 
     @DeleteMapping("/user")

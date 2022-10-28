@@ -1,28 +1,17 @@
 package com.springboot.api.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
 
-@Setter
+@AllArgsConstructor
+@Getter
 public class User {
     private String id;
     private String name;
     private String password;
 
-    public User(String id, String name, String password) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPassword() {
-        return password;
+    public String toString() {
+        return String.format("%s %s %s", this.id, this.name, this.password);
     }
 }
