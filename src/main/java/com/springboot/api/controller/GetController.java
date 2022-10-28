@@ -1,6 +1,6 @@
 package com.springboot.api.controller;
 
-import com.springboot.api.domain.dto.MemberDto;
+import com.springboot.api.dto.MemberDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +18,6 @@ public class GetController {
         return "Hello World";
     }
 
-    @GetMapping(value = "/name")
-    public String getName() {
-        log.info("getName으로 요청이 들어왔습니다.");
-        return "ohsukKwon";
-    }
 
     @GetMapping(value = "/variable1/{variable}")
     public String getVariable1(@PathVariable String variable) {
