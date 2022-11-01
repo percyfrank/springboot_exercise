@@ -1,6 +1,7 @@
 package com.springboot.api.parser;
 
 import com.springboot.api.domain.Hospital;
+import com.springboot.api.repository.HospitalDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,18 @@ class HospitalParserTest {
 
     @Autowired
     ReadLineContext<Hospital> hospitalReadLineContext;
+
+    @Autowired
+    HospitalDao hospitalDao;
+
+    @Test
+    @DisplayName("Hospital이 insert가 잘되는지")
+    void add() {
+        HospitalParser hp = new HospitalParser();
+        Hospital hosptial = hp.parse(line1);
+        hospitalDao.add(hosptial);
+
+    }
 
     @Test
     @DisplayName("10만건 이상 데이터가 파싱 되는지")
