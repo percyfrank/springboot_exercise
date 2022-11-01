@@ -51,15 +51,11 @@ class HospitalParserTest {
         Assertions.assertThat(selectedHospital.getId()).isEqualTo(hospital.getId());
         Assertions.assertThat(selectedHospital.getOpenServiceName()).isEqualTo(hospital.getOpenServiceName());
         Assertions.assertThat(selectedHospital.getHospitalName()).isEqualTo(hospital.getHospitalName());
+        // 날짜, float
         Assertions.assertThat(selectedHospital.getLicenseDate()).isEqualTo(hospital.getLicenseDate());
         Assertions.assertThat(selectedHospital.getTotalAreaSize()).isEqualTo(hospital.getTotalAreaSize());
 
     }
-
-
-
-
-
 
     @Test
     @DisplayName("10만건 이상 데이터가 파싱 되는지")
