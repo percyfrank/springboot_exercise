@@ -1,8 +1,10 @@
 package com.springboot.api.repository;
 
+import com.mysql.cj.result.Row;
 import com.springboot.api.domain.Hospital;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 
@@ -33,4 +35,28 @@ public class HospitalDao {
                 hospital.getHealthcareProviderCount(),hospital.getPatientRoomCount(),hospital.getTotalNumberOfBeds(),
                 hospital.getTotalAreaSize());
     }
+
+    RowMapper<Hospital> rowMapper = (rs,rowNum) -> {
+        Hospital hospital = new Hospital();
+        hospital.setId(rs.getInt("id"));
+        hospital.setOpenServiceName(rs.getString("open_service_name"));
+        hospital.setHospitalName(rs.getString("hospital_name"));
+        hospital.setLicenseDate(rs.getTimestamp("license_date").toLocalDateTime());
+
+        return hospital;
+    };
+    public Hospital findById(int id) {
+        return this.jdbcTemplate.queryForObject("select * from nation_wide_hospital where id = ?", rowMapper,id);
+    }
+
+    public int getCount() {
+        String sql = "select count(id) from nation_wide_hospital";
+        return this.jdbcTemplate.queryForObject(sql, Integer.class);
+
+    }
+
+    public void deleteAll() {
+        this.jdbcTemplate.update("delete from nation_wide_hospital");
+    }
+
 }
