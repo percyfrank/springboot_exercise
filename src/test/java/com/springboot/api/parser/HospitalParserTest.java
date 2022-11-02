@@ -43,42 +43,46 @@ class HospitalParserTest {
 
     @Test
     @DisplayName("Hospital이 insert가 잘되는지")
-    void add() {
-//        hospitalDao.deleteAll();
-//        Assertions.assertThat(hospitalDao.getCount()).isEqualTo(0);
-//        HospitalParser hp = new HospitalParser();
-//        Hospital hospital = hp.parse(line1);
-//        hospitalDao.add(hospital);
-//        Assertions.assertThat(hospitalDao.getCount()).isEqualTo(1);
-//
-//        Hospital selectedHospital = hospitalDao.findById(hospital.getId());
-//        Assertions.assertThat(selectedHospital.getId()).isEqualTo(hospital.getId());
-//        Assertions.assertThat(selectedHospital.getOpenServiceName()).isEqualTo(hospital.getOpenServiceName());
-//        Assertions.assertThat(selectedHospital.getHospitalName()).isEqualTo(hospital.getHospitalName());
-//        // 날짜, float
-//        Assertions.assertThat(selectedHospital.getLicenseDate()).isEqualTo(hospital.getLicenseDate());
-//        Assertions.assertThat(selectedHospital.getTotalAreaSize()).isEqualTo(hospital.getTotalAreaSize());
+    void addAndGet() {
+        hospitalDao.deleteAll();
+        Assertions.assertThat(hospitalDao.getCount()).isEqualTo(0);
+        HospitalParser hp = new HospitalParser();
+        Hospital hospital = hp.parse(line1);
+        hospitalDao.add(hospital);
+        Assertions.assertThat(hospitalDao.getCount()).isEqualTo(1);
 
+        Hospital selectedHospital = hospitalDao.findById(hospital.getId());
+        Assertions.assertThat(selectedHospital.getId()).isEqualTo(hospital.getId());
+        Assertions.assertThat(selectedHospital.getOpenServiceName()).isEqualTo(hospital.getOpenServiceName());
+        Assertions.assertThat(selectedHospital.getOpenLocalGovernmentCode()).isEqualTo(hospital.getOpenLocalGovernmentCode());
+        Assertions.assertThat(selectedHospital.getManagementNumber()).isEqualTo(hospital.getManagementNumber());
+        Assertions.assertThat(selectedHospital.getBusinessStatus()).isEqualTo(hospital.getBusinessStatus());
+        Assertions.assertThat(selectedHospital.getBusinessStatusCode()).isEqualTo(hospital.getBusinessStatusCode());
+        Assertions.assertThat(selectedHospital.getLicenseDate()).isEqualTo(hospital.getLicenseDate());
+        Assertions.assertThat(selectedHospital.getPhone()).isEqualTo(hospital.getPhone());
+        Assertions.assertThat(selectedHospital.getFullAddress()).isEqualTo(hospital.getFullAddress());
+        Assertions.assertThat(selectedHospital.getRoadNameAddress()).isEqualTo(hospital.getRoadNameAddress());
+        Assertions.assertThat(selectedHospital.getHospitalName()).isEqualTo(hospital.getHospitalName());
+        Assertions.assertThat(selectedHospital.getBusinessTypeName()).isEqualTo(hospital.getBusinessTypeName());
+        Assertions.assertThat(selectedHospital.getHealthcareProviderCount()).isEqualTo(hospital.getHealthcareProviderCount());
+        Assertions.assertThat(selectedHospital.getPatientRoomCount()).isEqualTo(hospital.getPatientRoomCount());
+        Assertions.assertThat(selectedHospital.getTotalNumberOfBeds()).isEqualTo(hospital.getTotalNumberOfBeds());
+
+        // 날짜, float
+        Assertions.assertThat(selectedHospital.getTotalAreaSize()).isEqualTo(hospital.getTotalAreaSize());
     }
 
     @Test
     @DisplayName("10만건 이상 데이터가 파싱 되는지")
     void oneHundredThousandsRows() throws IOException {
-//        // 서버환경에서 build할 때 문제가 생길 수 있다.
-//        // 어디에서든지 실행할 수 있게 짜야함
-//        hospitalDao.deleteAll();
-//        String filename = "C:\\Users\\82104\\Desktop\\fulldata_01_01_02_P_의원.csv";
-////        List<Hospital> hospitalList = hospitalReadLineContext.readByLine(filename);
-//        int cnt = this.hospitalService.insertLargeVolumeHospitalData(filename);
-//        assertTrue(cnt > 1000);
-//        assertTrue(cnt > 10000);
-//        System.out.printf("파싱된 데이터 개수 : %d", cnt);
-//        assertTrue(hospitalList.size() > 1000);
-//        assertTrue(hospitalList.size() > 10000);
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println(hospitalList.get(i).getHospitalName());
-//        }
-//        System.out.printf("파싱된 데이터 개수 : %d", + hospitalList.size());
+        // 서버환경에서 build할 때 문제가 생길 수 있다.
+        // 어디에서든지 실행할 수 있게 짜야함
+        hospitalDao.deleteAll();
+        String filename = "C:\\Users\\82104\\Desktop\\fulldata_01_01_02_P_의원.csv";
+        int cnt = this.hospitalService.insertLargeVolumeHospitalData(filename);
+        assertTrue(cnt > 1000);
+        assertTrue(cnt > 10000);
+        System.out.printf("파싱된 데이터 개수 : %d", cnt);
     }
     @Test
     @DisplayName("csv 1줄을 Hospital로 잘 만드는지 Test")
@@ -103,9 +107,6 @@ class HospitalParserTest {
         assertEquals(0, hospital.getPatientRoomCount()); //col:30
         assertEquals(0, hospital.getTotalNumberOfBeds()); //col:31
         assertEquals(52.29f, hospital.getTotalAreaSize()); //col:32
-
-
-
     }
 
 }
