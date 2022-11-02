@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 
 
 @Repository
@@ -20,7 +21,7 @@ public class HospitalDao {
     }
 
     // List<Hospital> -- 11만건의 Hospital
-    public void add(Hospital hospital) {
+    public Hospital add(Hospital hospital) {
         String sql = "INSERT INTO `like_lion`.`nation_wide_hospital` (`id`, `open_service_name`, `open_local_government_code`, `management_number`, `license_date`, `business_status`, `business_status_code`, `phone`, `full_address`, `road_name_address`, `hospital_name`, `business_type_name`, `healthcare_provider_number`, `patient_room_count`, `total_number_of_beds`, `total_area_size`)" +
                 " VALUES (?,?,?," +
                 "?,?,?," +
@@ -34,6 +35,7 @@ public class HospitalDao {
                 hospital.getRoadNameAddress(),hospital.getHospitalName(),hospital.getBusinessTypeName(),
                 hospital.getHealthcareProviderCount(),hospital.getPatientRoomCount(),hospital.getTotalNumberOfBeds(),
                 hospital.getTotalAreaSize());
+        return hospital;
     }
 
     RowMapper<Hospital> rowMapper = (rs,rowNum) -> {
@@ -61,12 +63,20 @@ public class HospitalDao {
         return this.jdbcTemplate.queryForObject("select * from nation_wide_hospital where id = ?", rowMapper,id);
     }
 
+    public List<Hospital> getAll() {
+        String sql = "select * from nation_wide_hospital order by id";
+        return jdbcTemplate.query(sql, rowMapper);
+    }
+
     public int getCount() {
         String sql = "select count(id) from nation_wide_hospital";
         return this.jdbcTemplate.queryForObject(sql, Integer.class);
 
     }
 
+    public void deleteById(int id) {
+        jdbcTemplate.update("delete from users where id = ?", id);
+    }
     public void deleteAll() {
         this.jdbcTemplate.update("delete from nation_wide_hospital");
     }
