@@ -23,12 +23,12 @@ public class HospitalController {
     @GetMapping(value = "/hospitals/{id}")
     public ResponseEntity<Hospital> get(@PathVariable int id) {
         Hospital hospital = hospitalDao.findById(id);
-        Optional<Hospital> opt = Optional.of(hospital);
+        Optional<Hospital> opt = Optional.of(hospital); // value 값이 null인 경우 Optional 타입 객체 생성
 
-        if(!opt.isEmpty()) {
-            return ResponseEntity.ok().body(hospital);
+        if(!opt.isEmpty()) { // null이 아닐 시
+            return ResponseEntity.ok().body(hospital); // 상태코드 200 반환
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Hospital());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Hospital()); // 상태코드 400 반환
         }
     }
 
@@ -51,12 +51,20 @@ public class HospitalController {
 
     @DeleteMapping(value = "/hospitals/{id}")
     public void deleteById(@PathVariable int id) {
-        hospitalDao.deleteById(id);
+        try {
+            hospitalDao.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @DeleteMapping(value = "/hospitals")
     public void deleteAll() {
-        hospitalDao.deleteAll();
+        try {
+            hospitalDao.deleteAll();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
